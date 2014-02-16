@@ -1,6 +1,8 @@
 
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 
@@ -9,14 +11,32 @@ public class Controller {
 	SearchEngines sEngines;
 	Left l = new Left();
 	Right r = new Right();
+	ProgressListener p = new ProgressL();
 	
 	Controller(View view, SearchEngines se){
 		this.view = view;
 		this.sEngines = se;
 		
-		view.setURL(sEngines.getCurrentValue());
 		view.addKeyListener(l);
 		view.addKeyListener(r);
+		view.addProgressListener(p);
+		view.setURL(sEngines.getCurrentValue());
+	}
+	
+	class ProgressL implements ProgressListener {
+
+		@Override
+		public void changed(ProgressEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void completed(ProgressEvent event) {
+			view.highlightVisualBlocks();
+			
+		}
+		
 	}
 	
 
