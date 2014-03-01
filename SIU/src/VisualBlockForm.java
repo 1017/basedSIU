@@ -5,8 +5,9 @@ public class VisualBlockForm extends VisualBlock {
 	}
 	Element element;
 
-	public VisualBlockForm(int topX, int topY, int width, int height, Element e) {
-		super(topX, topY, width, height);
+	public VisualBlockForm(int topX, int topY, int width, int height, int distanceFromFormElementX, int distanceFromFormElementY, Element e) 
+	{
+		super(topX, topY, width, height, distanceFromFormElementX, distanceFromFormElementY);
 		this.element = e;
 	}
 

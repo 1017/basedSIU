@@ -3,6 +3,10 @@
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.browser.StatusTextEvent;
+import org.eclipse.swt.browser.StatusTextListener;
+import org.eclipse.swt.browser.TitleEvent;
+import org.eclipse.swt.browser.TitleListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 
@@ -12,6 +16,7 @@ public class Controller {
 	Left l = new Left();
 	Right r = new Right();
 	ProgressListener p = new ProgressL();
+	TitleListener t = new TitleL();
 	
 	Controller(View view, SearchEngines se){
 		this.view = view;
@@ -20,20 +25,32 @@ public class Controller {
 		view.addKeyListener(l);
 		view.addKeyListener(r);
 		view.addProgressListener(p);
+		view.addTitleListener(t);
 		view.setURL(sEngines.getCurrentValue());
+	}
+	
+	class TitleL implements TitleListener {
+
+		@Override
+		public void changed(TitleEvent event) {
+			System.out.println("TitleEvent");
+			view.checkJQuery();
+		}
+		
 	}
 	
 	class ProgressL implements ProgressListener {
 
 		@Override
 		public void changed(ProgressEvent event) {
-			// TODO Auto-generated method stub
+			System.out.println("Current loading: " + event.current);
 			
 		}
 
 		@Override
 		public void completed(ProgressEvent event) {
-			view.highlightVisualBlocks();
+			System.out.println("Browser Completed Loading");
+			view.loadJQuery();
 			
 		}
 		

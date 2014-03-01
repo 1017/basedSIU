@@ -2,16 +2,28 @@
 
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.browser.StatusTextListener;
+import org.eclipse.swt.browser.TitleListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.Object;
+import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 
 public class View {
 
 	Display display = new Display();
     Shell shell = new Shell(display);
 	Browser b = new Browser(shell, SWT.WEBKIT);
+	Semaphore s = new Semaphore(0);
+	boolean loaded;
+	int attempt = 1;
     
 	View(){
 		
@@ -36,12 +48,20 @@ public class View {
 		b.addProgressListener(p);
 	}
 	
-	public void setURL(String URL){
-        b.setUrl(URL);
+	public void addTitleListener(TitleListener s) {
+		b.addTitleListener(s);
 	}
 	
-	public void highlightVisualBlocks() //http://stackoverflow.com/questions/5859440/how-to-use-jqueryui-in-swt-browser
+	public void setURL(String URL){
+		loaded = false;
+        b.setUrl(URL);
+		
+	}
+	
+	public void loadJQuery() //http://stackoverflow.com/questions/5859440/how-to-use-jqueryui-in-swt-browser
 	{
+		loaded = true; //this is only called after the page has loaded
+		
 		String js = "function addLibraries()"
 				+"{"
 				+"var head = document.getElementsByTagName('head')[0];"
@@ -51,58 +71,52 @@ public class View {
     			+"s.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');"
     			+"s.setAttribute('type', 'text/javascript');"
     			+"head.appendChild(s);"    
-
-    			/*+"s = document.createElement(\"script\");"       
-    			+"s.setAttribute('src', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js');"
-    			+"s.setAttribute('type', 'text/javascript');"
-    			+"head.appendChild(s);"
-
-    			+"s = document.createElement(\"link\");"     
-    			+"s.setAttribute('href', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/base/jquery-ui.css');"
-    			+"s.setAttribute('type', 'text/css');"
-    			+"s.setAttribute('media', 'all');"
-    			+"s.setAttribute('rel', 'stylesheet');"
-    			+"head.appendChild(s);"
-
-    			+"s = document.createElement(\"link\");"     
-    			+"s.setAttribute('href', 'http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css');"
-    			+"s.setAttribute('type', 'text/css');"
-    			+"s.setAttribute('media', 'all');"
-    			+"s.setAttribute('rel', 'stylesheet');"
-    			+"head.appendChild(s);"*/
     			+"}"
     			+"addLibraries();";
-
-		String highlightVisualBlocks = "function isTextNode(){"
-			 
-				+"return( this.nodeType === 3 );"
-			 
-				+"}"
-				+ ""
-				+ "function highlightVisualBlocks()"
-				+"{"
-				+"$(\"form\").css(\"border\", \"3px solid red\");"
-				/*+"$(\"form\").children().css(\"border\", \"3px solid green\");"
-				+"$(\"form\").children().children().css(\"border\", \"3px solid blue\");"
-				+"$(\"form\").find(\"input\").css(\"border\", \"3px solid blue\");"*/
-				+"$('form').find('select,:submit,:checked,:selected,:text,textarea').css(\"border\", \"3px solid blue\");"
-				//+"$('form').find('*').css(\"border\", \"3px solid green\");"
-				//+"$('*').contents.filter(isTextNode).css(\"border\", \"3px solid yellow\");"
-				/*+"$( 'form' )"
-				  +".find('*')"
-				    +".filter(function() {"
-				     +" return this.nodeType === 3;"
-				    +"}).wrap(\"<p></p>\");"*/
-				+"$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').wrap(\"<x></x>\");"
-						+"$( 'form' ).find('x').css(\"border\", \"3px solid yellow\");"
-				//.each(function (index, value) { alert(index + \" : \" + value.nodeValue)});"
-				//+"$(\"body\").css(\"background-color\", \"green\");"
-				//+"alert(\"JavaScript, called from Java\");"
-				+"}"
-				+"setTimeout(highlightVisualBlocks, 500);";
-
 		b.execute(js);
-		b.execute(highlightVisualBlocks);
+
+		//change the title in 100ms so we can check in the text listener if JQuery has loaded yet
+		js = "setTimeout(function() { document.title = \"Attempt 1\" }, 100)"; 
+		b.execute(js);
 				
 	}
+
+	public void checkJQuery() {
+		if (loaded){ //only need to check this if the page has been fully loaded
+			String js = "$('form').find('select,:submit,:checked,:selected,:text,textarea').toArray()";
+			try {
+				b.execute(js);
+				highlightVisualBlocks();
+				extractVisualBlocks();
+				System.out.println("Works: " + b.evaluate(js));
+			} catch (SWTException e) { //if JQuery hasn't been loaded yet, change the title so we can check again in 100ms
+				String j = "setTimeout(function() { document.title = \"Attempt "+ ++attempt +"\" }, 100)";	
+				System.out.println(j);		
+				b.execute(j);			
+				System.out.println("No JQ bro" + e);
+			}
+		}		
+	}
+	
+	private void highlightVisualBlocks()
+	{
+		String highlightVisualBlocks = 
+		"function highlightVisualBlocks()"
+		+"{"
+		+"$(\"form\").css(\"border\", \"1px solid red\");"
+		+"$('form').find('select,:submit,:checked,:selected,:text,textarea').css(\"border\", \"1px solid blue\");"
+		+"$('form').find(':radio').wrap('<span></span>').parent().css(\"border\", \"1px solid blue\");"
+		+"$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').wrap(\"<span></span>\").parent().css(\"border\", \"1px solid yellow\");"
+		+"}"
+		+"highlightVisualBlocks();";
+		
+		b.execute(highlightVisualBlocks);
+	}
+	
+	private void extractVisualBlocks()
+	{
+		
+	}
+
+
 }
