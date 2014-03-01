@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.Object;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
@@ -87,8 +88,8 @@ public class View {
 			try {
 				b.execute(js);
 				highlightVisualBlocks();
-				extractVisualBlocks();
 				System.out.println("Works: " + b.evaluate(js));
+				extractVisualBlocks();
 			} catch (SWTException e) { //if JQuery hasn't been loaded yet, change the title so we can check again in 100ms
 				String j = "setTimeout(function() { document.title = \"Attempt "+ ++attempt +"\" }, 100)";	
 				System.out.println(j);		
@@ -115,7 +116,21 @@ public class View {
 	
 	private void extractVisualBlocks()
 	{
-		
+		String j = 
+		//"function test () { "
+		 "var arr;"
+		+ "arr = $('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { alert(this.wholeText);}});"
+		//+"arr = $('form').find('select,:submit,:checked,:selected,:text,textarea').html().toArray();"
+		//+ ".each(function () { arr[$(this).val()] = $(this).css(\"text-size\")}); "
+		//+ "return $('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').css(\"text-size\").toArray(); "
+		+ "return arr;";
+		//+ "}"
+		//+ "test();";
+		b.execute(j);
+		//System.out.println(((Object[])((Object[])b.evaluate(j))[1]));
+		//Object[] o = b.evaluate(j);
+		//System.out.println("VB " +b.evaluate(j));
+		//System.out.println(Arrays.deepToString(o));
 	}
 
 
