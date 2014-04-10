@@ -4,22 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-public class SearchEngines {
+public class SearchInterfaces {
 	
-	ArrayList<String> listOfSearchEngines;
+	ArrayList<SearchInterface> listOfSearchEngines;
 	int currentValue = 0;
 	String fileName;
 
-	public SearchEngines(String file) {
+	public SearchInterfaces(String file) {
 		fileName = file;
-		listOfSearchEngines = new ArrayList<String>();
+		listOfSearchEngines = new ArrayList<SearchInterface>();
 		BufferedReader br;
 		String line;
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 			while ((line = br.readLine()) != null) 
 			{			
-				listOfSearchEngines.add(line);
+				listOfSearchEngines.add(new SearchInterface(line));
 			}
 			br.close();
 			}
@@ -29,18 +29,18 @@ public class SearchEngines {
 		}
 	}
 
-	public String getCurrentValue() {
+	public SearchInterface getCurrentValue() {
 		return listOfSearchEngines.get(currentValue);
 	}
 	
-	public String getNextValue() {
+	public SearchInterface getNextValue() {
 		currentValue++;
 		if (currentValue == listOfSearchEngines.size())
 			currentValue = 0;
 		return getCurrentValue();
 	}
 	
-	public String getPreviousValue() {
+	public SearchInterface getPreviousValue() {
 		currentValue--;
 		if (currentValue < 0)
 			currentValue = listOfSearchEngines.size() - 1;

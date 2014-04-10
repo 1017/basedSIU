@@ -2,16 +2,30 @@
 public class VisualBlockText extends VisualBlock 
 {
 	String font;
-	int fontSize;
-	int color;
+	String text;
+	String fontSize;
+	String color;
 
-	public VisualBlockText(int topX, int topY, int width, int height, int distanceFromFormElementX, int distanceFromFormElementY,
-			String font, int fontSize, int color) 
+	public VisualBlockText(int topX, int topY, int width, int height,
+			String font, String text, String fontSize, String color) 
 	{
-		super(topX, topY, width, height, distanceFromFormElementX, distanceFromFormElementY);
+		super(topX, topY, width, height);
 		this.font = font;
+		this.text = text;
 		this.fontSize = fontSize;
 		this.color = color;
+	}
+	
+	public String toString()
+	{
+		return "Top X: " + topX
+				+"\nTop Y: " + topY
+				+"\nWidth: " + width
+				+"\nHeight: " + height
+				+"\nFont: " + font
+				+"\nText: " + text
+				+"\nFont Size: " + fontSize
+				+"\nColor: " + color;
 	}
 
 }

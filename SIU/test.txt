@@ -2,6 +2,8 @@ http://google.com
 http://yahoo.com
 http://altavista.com
 http://guccimane.com
-http://www.bigmoviezone.com/articles/adv_featrev_search2.html
 http://www.rakuten.com/retail/advSearch.asp?loc=107
 http://www.movietickets.com/advanced_search.asp#.UwCsa_l_t8E
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Hotels/interfacecached/www.smoothhound.co.uk_1/advanced-search.html
+http://www.bigmoviezone.com/articles/adv_featrev_search2.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.cdeurope.com_1/meta_index1.html

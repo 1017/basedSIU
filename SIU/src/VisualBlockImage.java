@@ -1,9 +1,19 @@
 
 public class VisualBlockImage extends VisualBlock {
 
-	public VisualBlockImage(int topX, int topY, int width, int height, int distanceFromFormElementX, int distanceFromFormElementY) 
+	String defaultValue;
+	public VisualBlockImage(int topX, int topY, int width, int height, String defaultValue) 
 	{
-		super(topX, topY, width, height, distanceFromFormElementX, distanceFromFormElementY);
+		super(topX, topY, width, height);
+		this.defaultValue = defaultValue;
 	}
 
+	public String toString()
+	{
+		return "Top X: " + topX
+				+"\nTop Y: " + topY
+				+"\nWidth: " + width
+				+"\nHeight: " + height
+				+"\nDefault Value: " + defaultValue;
+	}
 }
