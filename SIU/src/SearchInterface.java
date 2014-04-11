@@ -5,27 +5,46 @@ public class SearchInterface
 {
 	private String url;
 	private ArrayList<VisualBlock> visualBlocks;
+	private VisualBlockCleanTool vbc;
 	private VisualBlockExtractTool vbe;
 	private VisualBlockGroupTool vbg;
+	private LabellingTool lt;
 	
 	public SearchInterface(String u)
 	{
 		url = u;
 	}
 	
-	public void extractVisualBlocks(View v)
+	private void cleanVisualBlocks()
+	{
+		vbc = new VisualBlockCleanTool(visualBlocks);
+		vbc.clean();
+	}
+	
+	private void extractVisualBlocks(View v)
 	{
 		vbe = new VisualBlockExtractTool();
 		visualBlocks = vbe.extract(v);
 	}
 	
-	public void groupVisualBlocks()
+	private void groupVisualBlocks()
 	{
 		vbg = new VisualBlockGroupTool(visualBlocks);
+	}
+	
+	private void performInitialLabelling()
+	{
+		lt = new LabellingTool(visualBlocks);
 	}
 	
 	public String getUrl()
 	{
 		return url;
+	}
+
+	public void understand(View view) {
+		extractVisualBlocks(view);
+		cleanVisualBlocks();
+		
 	}
 }

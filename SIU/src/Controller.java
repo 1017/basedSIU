@@ -99,7 +99,7 @@ public class Controller {
 					highlightVisualBlocks();
 					System.out.println("Works: " + view.evaluateJS(js));
 					//extractVisualBlocks();
-					sEngines.getCurrentValue().extractVisualBlocks(view);
+					sEngines.getCurrentValue().understand(view);
 				} catch (SWTException e) { //if JQuery hasn't been loaded yet, change the title so we can check again in 100ms
 					String j = "setTimeout(function() { document.title = \"Attempt "+ ++attempt +"\" }, 100)";	
 					System.out.println(j);		

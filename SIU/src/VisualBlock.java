@@ -1,8 +1,10 @@
 
-abstract class VisualBlock {
+abstract class VisualBlock implements Comparable<VisualBlock> {
 	protected int topX, topY, width, height;
 	private int distanceFromFormElementX;
 	private int distanceFromFormElementY;
+	
+	enum Quadrants {ABOVE,LEFT,RIGHT,BELOW,ABOVELEFT,ABOVERIGHT,BELOWLEFT,BELOWRIGHT }
 	
 	public VisualBlock (int topX, int topY, int width, int height)
 	{
@@ -28,6 +30,14 @@ abstract class VisualBlock {
 		return height;
 	}
 
+	public void setWidth(int w) {
+		this.width = w;
+	}
+
+	public void setHeight(int h) {
+		this.height = h;
+	}
+
 	public int getArea() {
 		return height*width;
 	}
@@ -47,6 +57,36 @@ abstract class VisualBlock {
 
 	public void setDistanceFromFormElementY(int y) {
 		distanceFromFormElementY = y;
+	}
+	
+	///Gets the quadrant v is in relative to this block
+	public Quadrants getQuadrant(VisualBlock v)
+	{
+		int centerHeight = v.getTopY() + (v.getHeight() / 2);
+		if (centerHeight < topY)
+		{
+			if (v.getTopX() < topX)
+				return Quadrants.ABOVELEFT;
+			else if ((v.getTopX() > (topX+width)))
+				return Quadrants.ABOVERIGHT;
+			else
+				return Quadrants.ABOVE;
+		}
+		else if (centerHeight > (topY + height))
+		{
+			if (v.getTopX() < topX)
+				return Quadrants.LEFT;
+			else if ((v.getTopX() > (topX+width)))
+				return Quadrants.RIGHT;	
+		}
+		else
+		{
+			if (v.getTopX() < topX)
+				return Quadrants.BELOWLEFT;
+			else if ((v.getTopX() > (topX+width)))
+				return Quadrants.BELOWRIGHT;
+		}
+		return Quadrants.BELOW;
 	}
 	
 	public int[] getCenter()
@@ -75,5 +115,20 @@ abstract class VisualBlock {
 	{
 		return ((this.topX >= (v.getTopX() - 10))
 				&& (this.topX >= (v.getTopX() + 10)));
+	}
+	
+	public boolean isBeside(VisualBlock v)
+	{
+		return ((topX+width+4) > v.getTopX())
+		&& (topY == v.getTopY());
+	}
+
+	public int compareTo(VisualBlock v)
+	{
+		if ((topY+height < v.getTopY()) || 
+				(topY < v.getTopY()+v.getHeight() && (topX < v.getTopX())))
+			return -1;
+		else
+			return 1;		
 	}
 }
