@@ -13,6 +13,7 @@ public class VisualBlockExtractTool
 	{
 		visualBlocks = new ArrayList<VisualBlock>();
 		extractTextBlocks(v);
+		TextStyleFactory.printTextStyles();
 		extractImageBlocks(v);
 		extractTextBoxBlocks(v);
 		extractDropDownBlocks(v);

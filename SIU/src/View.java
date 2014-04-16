@@ -22,8 +22,6 @@ public class View {
 	Display display = new Display();
     Shell shell = new Shell(display);
 	Browser b = new Browser(shell, SWT.WEBKIT);
-	Semaphore s = new Semaphore(0);
-	int attempt = 1;
     
 	View(){
 		

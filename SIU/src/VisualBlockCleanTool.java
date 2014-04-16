@@ -35,9 +35,9 @@ public class VisualBlockCleanTool {
 						((VisualBlockText)secondBlock).addStyledText(((VisualBlockText)secondBlock).getText());
 					}
 					((VisualBlockText)firstBlock).addText(((VisualBlockText)secondBlock).getText());
-					System.out.print("Old second block end: " +(secondBlock.getTopX() + secondBlock.getWidth() ));
+					//System.out.print("Old second block end: " +(secondBlock.getTopX() + secondBlock.getWidth() ));
 					firstBlock.setWidth(secondBlock.getTopX() + secondBlock.getWidth() - firstBlock.getTopX());
-					System.out.println("New first block end: " + (firstBlock.getTopX() + firstBlock.getWidth() ));
+					//System.out.println("New first block end: " + (firstBlock.getTopX() + firstBlock.getWidth() ));
 					
 					visualBlocks.remove(secondBlock);
 				}

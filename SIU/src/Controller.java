@@ -20,6 +20,7 @@ public class Controller {
 	TitleListener t = new TitleL();
 	boolean pageLoaded = false;
 	int attempt = 1;
+	int jQueryTimeout = 100;
 	
 	Controller(View view, SearchInterfaces se){
 		this.view = view;
@@ -48,7 +49,7 @@ public class Controller {
 		view.executeJS(js);
 
 		//change the title in 100ms so we can check in the text listener if JQuery has loaded yet
-		js = "setTimeout(function() { document.title = \"Attempt 1\" }, 100)"; 
+		js = "setTimeout(function() { document.title = \"Attempt 1\" }, "+jQueryTimeout+")"; 
 		view.executeJS(js);
 	}
 	
@@ -68,29 +69,11 @@ public class Controller {
 		view.executeJS(highlightVisualBlocks);
 	}
 	
-	private void extractVisualBlocks()
-	{
-		String j = 
-		//"function test () { "
-		 "var arr;"
-		+ "arr = $('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { alert(this.wholeText);}});"
-		//+"arr = $('form').find('select,:submit,:checked,:selected,:text,textarea').html().toArray();"
-		//+ ".each(function () { arr[$(this).val()] = $(this).css(\"text-size\")}); "
-		//+ "return $('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').css(\"text-size\").toArray(); "
-		+ "return arr;";
-		//+ "}"
-		//+ "test();";
-		view.executeJS(j);
-		//System.out.println(((Object[])((Object[])b.evaluate(j))[1]));
-		//Object[] o = b.evaluate(j);
-		//System.out.println("VB " +b.evaluate(j));
-		//System.out.println(Arrays.deepToString(o));
-	}
-	
+
 	class TitleL implements TitleListener {
 
 		@Override
-		public void changed(TitleEvent event) {
+		public void changed(TitleEvent event) { //check if JQuery library has been loaded from URL, if not, check again
 			System.out.println("TitleEvent");
 			if (pageLoaded && (attempt<200)){ //only need to check this if the page has been fully loaded
 				String js = "$('form').find('select,:submit,:checked,:selected,:text,textarea').toArray()";
@@ -101,7 +84,7 @@ public class Controller {
 					//extractVisualBlocks();
 					sEngines.getCurrentValue().understand(view);
 				} catch (SWTException e) { //if JQuery hasn't been loaded yet, change the title so we can check again in 100ms
-					String j = "setTimeout(function() { document.title = \"Attempt "+ ++attempt +"\" }, 100)";	
+					String j = "setTimeout(function() { document.title = \"Attempt "+ ++attempt +"\" }, "+jQueryTimeout+")";	
 					System.out.println(j);		
 					view.executeJS(j);			
 					System.out.println("No JQ bro" + e);

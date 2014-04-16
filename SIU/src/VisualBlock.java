@@ -123,7 +123,7 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 		&& (topY == v.getTopY());
 	}
 
-	public int compareTo(VisualBlock v)
+	public int compareTo(VisualBlock v) //sort blocks such that starts at top left, goes right, then down
 	{
 		if ((topY+height < v.getTopY()) || 
 				(topY < v.getTopY()+v.getHeight() && (topX < v.getTopX())))

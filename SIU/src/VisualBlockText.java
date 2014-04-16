@@ -1,34 +1,17 @@
 
 public class VisualBlockText extends VisualBlock 
 {
-	String font;
-	String text;
-	String fontSize;
-	String color;
-	String weight;
-	String styledText;
+	private String text;
+	private String styledText;
+	private TextStyle textStyle;
 
 	public VisualBlockText(int topX, int topY, int width, int height,
 			String font, String text, String fontSize, String color, String weight) 
 	{
 		super(topX, topY, width, height);
-		this.font = font;
 		this.text = text;
-		this.fontSize = fontSize;
-		this.color = color;
 		this.styledText = "";
-		
-		try { 
-			int weightInt = Integer.valueOf(weight);
-			if (weightInt == 400)
-				this.weight = "normal";
-			else if (weightInt < 400)
-				this.weight = "light";
-			else if (weightInt > 400)
-				this.weight = "bold";
-	    } catch(NumberFormatException e) { 
-			this.weight = weight;
-	    }
+		this.textStyle = TextStyleFactory.getTextStyle(font, fontSize, color, weight);
 	}
 
 	public void addStyledText(String t)
@@ -48,7 +31,7 @@ public class VisualBlockText extends VisualBlock
 	
 	public String getWeight()
 	{
-		return weight;
+		return textStyle.getWeight();
 	}
 	
 	public String toString()
@@ -57,11 +40,11 @@ public class VisualBlockText extends VisualBlock
 				+"\nTop Y: " + topY
 				+"\nWidth: " + width
 				+"\nHeight: " + height
-				+"\nFont: " + font
+				+"\nFont: " + textStyle.getFont()
 				+"\nText: " + text
-				+"\nFont Size: " + fontSize
-				+"\nColor: " + color
-				+"\nWeight: " + weight;
+				+"\nFont Size: " + textStyle.getFontSize()
+				+"\nColor: " + textStyle.getColor()
+				+"\nWeight: " + textStyle.getWeight();
 	}
 
 }
