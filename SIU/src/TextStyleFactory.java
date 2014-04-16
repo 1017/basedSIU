@@ -22,4 +22,9 @@ public class TextStyleFactory {
 			System.out.println(textStyles.get(i));
 		}
 	}
+	
+	public static void clearTextStyles()
+	{
+		textStyles.clear();
+	}
 }

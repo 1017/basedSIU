@@ -14,7 +14,6 @@ public class TextStyle {
 		this.fontSize = fontSize;
 		this.color = color;
 		
-		
 		try { 
 			int weightInt = Integer.valueOf(weight);
 			if (weightInt == 400)
@@ -31,6 +30,13 @@ public class TextStyle {
 	public void addMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e)
 	{
 		matches[q.ordinal()][e.ordinal()]++;
+	}
+	
+
+	public void removeMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e) 
+	{
+		matches[q.ordinal()][e.ordinal()]--;
+		
 	}
 	
 	public int getMatches(VisualBlock.Quadrants q, VisualBlockForm.Element e)
@@ -95,6 +101,14 @@ public class TextStyle {
 	return "\nFont: " + this.getFont()
 	+" Font Size: " + this.getFontSize()
 	+" Color: " + this.getColor()
-	+" Weight: " + this.getWeight();
+	+" Weight: " + this.getWeight()
+	+" Above Quad matches: " + this.getMatches(VisualBlock.Quadrants.ABOVE)
+	+" Below Quad matches: " + this.getMatches(VisualBlock.Quadrants.BELOW)
+	+" Left Quad matches: " + this.getMatches(VisualBlock.Quadrants.LEFT)
+	+" Right Quad matches: " + this.getMatches(VisualBlock.Quadrants.RIGHT)
+	+" Right match checkbox: " + this.getMatches(VisualBlock.Quadrants.RIGHT, VisualBlockForm.Element.CHECKBOX)
+	+" Left match text input: " + this.getMatches(VisualBlock.Quadrants.LEFT, VisualBlockForm.Element.TEXTINPUT)
+	+" Right match radio: " + this.getMatches(VisualBlock.Quadrants.RIGHT, VisualBlockForm.Element.RADIO);
 	}
+
 }

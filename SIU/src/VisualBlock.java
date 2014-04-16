@@ -3,8 +3,10 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	protected int topX, topY, width, height;
 	private int distanceFromFormElementX;
 	private int distanceFromFormElementY;
+	private VisualBlock neighbour[] = new VisualBlock[Quadrants.values().length];
+	private int neighbourDistance[] = new int[Quadrants.values().length];
 	
-	enum Quadrants {ABOVE,LEFT,RIGHT,BELOW,ABOVELEFT,ABOVERIGHT,BELOWLEFT,BELOWRIGHT }
+	enum Quadrants {ABOVE,LEFT,RIGHT,BELOW,ABOVELEFT,ABOVERIGHT,BELOWLEFT,BELOWRIGHT}
 	
 	public VisualBlock (int topX, int topY, int width, int height)
 	{
@@ -12,14 +14,27 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 		this.topY = topY;
 		this.width = width;
 		this.height = height;
+		for (int i=0; i<Quadrants.values().length; i++)
+		{
+			neighbour[i] = null;
+			neighbourDistance[i] = Integer.MAX_VALUE;
+		}
 	}
-	
+
 	public int getTopX() {
 		return topX;
 	}
 
 	public int getTopY() {
 		return topY;
+	}
+	
+	public int getBottomX() {
+		return topX+width;
+	}
+
+	public int getBottomY() {
+		return topY+height;
 	}
 
 	public int getWidth() {
@@ -72,7 +87,7 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 			else
 				return Quadrants.ABOVE;
 		}
-		else if (centerHeight > (topY + height))
+		else if (centerHeight < (topY + height))
 		{
 			if (v.getTopX() < topX)
 				return Quadrants.LEFT;
@@ -130,5 +145,86 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 			return -1;
 		else
 			return 1;		
+	}
+
+	public VisualBlock getNeighbour(Quadrants quadrant) {
+		return neighbour[quadrant.ordinal()];
+	}
+	
+	public int getNeighbourDistance(Quadrants quadrant) {
+		return neighbourDistance[quadrant.ordinal()];
+	}
+
+	private int distanceAbove(VisualBlock objectBlock)
+	{
+		return (this.getTopY() - objectBlock.getBottomY());		
+	}
+	private int distanceBelow(VisualBlock objectBlock)
+	{
+		return (objectBlock.getTopY() - this.getBottomY());		
+	}
+	private int distanceRight(VisualBlock objectBlock)
+	{
+		return (objectBlock.getTopX() - this.getBottomX());		
+	}
+	private int distanceLeft(VisualBlock objectBlock)
+	{
+		return (this.getTopX() - objectBlock.getBottomX());		
+	}
+
+	public int getDistanceFrom(VisualBlock objectBlock, Quadrants quadrant) {
+		if (quadrant == Quadrants.ABOVE)
+			return distanceAbove(objectBlock);
+		else if (quadrant == Quadrants.BELOW)
+			return distanceBelow(objectBlock);
+		else if (quadrant == Quadrants.LEFT)
+			return distanceLeft(objectBlock);
+		else if (quadrant == Quadrants.RIGHT)
+			return distanceRight(objectBlock);
+		else if (quadrant == Quadrants.ABOVELEFT)
+			return (int)(Math.sqrt(Math.pow(distanceAbove(objectBlock),2)+(Math.pow(distanceLeft(objectBlock),2))));
+		else if (quadrant == Quadrants.ABOVERIGHT)
+			return (int)(Math.sqrt(Math.pow(distanceAbove(objectBlock),2)+(Math.pow(distanceRight(objectBlock),2))));			
+		else if (quadrant == Quadrants.BELOWLEFT)
+			return (int)(Math.sqrt(Math.pow(distanceBelow(objectBlock),2)+(Math.pow(distanceLeft(objectBlock),2))));				
+		else if (quadrant == Quadrants.BELOWRIGHT)
+			return (int)(Math.sqrt(Math.pow(distanceBelow(objectBlock),2)+(Math.pow(distanceRight(objectBlock),2))));
+		else
+			return Integer.MAX_VALUE;
+	}
+
+	public void updateNeighbour(VisualBlock objectBlock, Quadrants quadrant, int distance) {
+		int index = quadrant.ordinal();
+		if (((objectBlock.getClass() == VisualBlockText.class)) &&
+			(((VisualBlockForm)this).element == VisualBlockForm.Element.TEXTINPUT) &&
+			(quadrant == VisualBlock.Quadrants.LEFT))
+			System.out.println("T ATTEMPTING: " + ((VisualBlockText)objectBlock).getText() + "topx:" + topX + "topY: " + topY + "quad:" + quadrant.toString());
+		
+		if (((objectBlock.getClass() == VisualBlockForm.class)) &&
+				(((VisualBlockForm)this).element == VisualBlockForm.Element.TEXTINPUT) &&
+			(quadrant == VisualBlock.Quadrants.LEFT))
+			System.out.println("F ATTEMPTING: " + ((VisualBlockForm)objectBlock).element.toString() + "topx:" + topX + "topY: " + topY);
+		
+
+		if (((objectBlock.getClass() == VisualBlockImage.class)) &&
+				(((VisualBlockForm)this).element == VisualBlockForm.Element.TEXTINPUT) &&
+			(quadrant == VisualBlock.Quadrants.LEFT))
+			System.out.println("F ATTEMPTING: " + ((VisualBlockImage)objectBlock).getDefaultValue() + "topx:" + topX + "topY: " + topY);
+			
+
+		if ((neighbour[index]!=null) && (neighbour[index].getClass() == VisualBlockText.class))
+			((VisualBlockText)neighbour[index]).removeTextStyleMatch(quadrant, ((VisualBlockForm)this).element);
+		
+		if ((objectBlock.getClass() == VisualBlockText.class) &&
+				(this.getClass() == VisualBlockForm.class))
+		{
+			((VisualBlockText)objectBlock).addTextStyleMatch(quadrant, ((VisualBlockForm)this).element);			
+		}
+		
+		neighbour[index] = objectBlock;
+		neighbourDistance[index] = distance;
+		
+		
+		
 	}
 }

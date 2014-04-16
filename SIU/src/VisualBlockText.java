@@ -34,6 +34,16 @@ public class VisualBlockText extends VisualBlock
 		return textStyle.getWeight();
 	}
 	
+	public void addTextStyleMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e)
+	{
+		textStyle.addMatch(q, e);
+	}
+
+	public void removeTextStyleMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e) 
+	{
+		textStyle.removeMatch(q, e);		
+	}
+	
 	public String toString()
 	{
 		return "Top X: " + topX

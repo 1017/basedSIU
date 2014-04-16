@@ -35,6 +35,7 @@ public class SearchInterface
 	private void performInitialLabelling()
 	{
 		lt = new LabellingTool(visualBlocks);
+		lt.performLabelling();
 	}
 	
 	public String getUrl()
@@ -43,8 +44,10 @@ public class SearchInterface
 	}
 
 	public void understand(View view) {
+		TextStyleFactory.clearTextStyles();
 		extractVisualBlocks(view);
 		cleanVisualBlocks();
+		performInitialLabelling();
 		
 	}
 }

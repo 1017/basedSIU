@@ -7,6 +7,11 @@ public class VisualBlockImage extends VisualBlock {
 		super(topX, topY, width, height);
 		this.defaultValue = defaultValue;
 	}
+	
+	public String getDefaultValue()
+	{
+		return defaultValue;
+	}
 
 	public String toString()
 	{
