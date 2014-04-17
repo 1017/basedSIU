@@ -1,3 +1,4 @@
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.alibris.com_1/meta_index1.html
 http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.varsitybooks.com_1/meta_index1.html
 http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.1bookstreet.com_1/meta_index1.html
 http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/1stcyberstore.com_1/meta_index1.html

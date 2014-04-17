@@ -10,6 +10,16 @@ public class LabellingTool {
 	
 	public void performLabelling()
 	{
+		getNearestQuadrantForAllFormElements();
+		TextStyleFactory.printTextStyles();
+		matchCheckboxes();
+		matchRadioButtons();
+		matchTextBoxes();
+		//matchDropdowns();
+	}
+	
+	public void getNearestQuadrantForAllFormElements()
+	{
 		for (int i = 0; i<visualBlocks.size(); i++)
 		{
 			if (visualBlocks.get(i).getClass() == VisualBlockForm.class)
@@ -29,10 +39,78 @@ public class LabellingTool {
 				}
 			}
 		}
-		System.out.println("Just finished first pass labelling ..");
-		TextStyleFactory.printTextStyles();
+		System.out.println("Just finished first pass labelling ..");		
 	}
-	
+
+	public void matchCheckboxes()
+	{
+		int i = 0;
+		while (i<visualBlocks.size())
+		{
+			if ((visualBlocks.get(i).getClass() == VisualBlockForm.class)
+					&& (((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.CHECKBOX))
+			{		
+				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks))
+				{
+					visualBlocks.remove(i);		
+					i--;
+				}
+			}
+			i++;
+		}
+	}
+	public void matchRadioButtons()
+	{
+		int i = 0;
+		while (i<visualBlocks.size())
+		{
+			if ((visualBlocks.get(i).getClass() == VisualBlockForm.class)
+					&& (((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.RADIO))
+			{		
+				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks))
+				{
+					visualBlocks.remove(i);		
+					i--;
+				}
+			}
+			i++;
+		}
+	}
+	public void matchTextBoxes()
+	{
+		int i = 0;
+		while (i<visualBlocks.size())
+		{
+			if ((visualBlocks.get(i).getClass() == VisualBlockForm.class)
+					&& ((((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.TEXTINPUT) ||
+					((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.DROPDOWN))
+			{		
+				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks) && (i<visualBlocks.size()))
+				{
+					visualBlocks.remove(i);		
+					i--;
+				}
+			}
+			i++;
+		}
+	}
+	public void matchDropdowns()
+	{
+		int i = 0;
+		while (i<visualBlocks.size())
+		{
+			if ((visualBlocks.get(i).getClass() == VisualBlockForm.class)
+					&& (((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.DROPDOWN))
+			{
+				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks))
+				{
+					visualBlocks.remove(i);		
+					i--;
+				}
+			}
+			i++;
+		}
+	}
 	
 
 }

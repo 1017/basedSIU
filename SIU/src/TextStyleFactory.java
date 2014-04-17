@@ -27,4 +27,9 @@ public class TextStyleFactory {
 	{
 		textStyles.clear();
 	}
+	
+	public static ArrayList<TextStyle> getTextStyles()
+	{
+		return textStyles;
+	}
 }

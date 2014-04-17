@@ -3,8 +3,9 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	protected int topX, topY, width, height;
 	private int distanceFromFormElementX;
 	private int distanceFromFormElementY;
-	private VisualBlock neighbour[] = new VisualBlock[Quadrants.values().length];
-	private int neighbourDistance[] = new int[Quadrants.values().length];
+	protected VisualBlock neighbour[] = new VisualBlock[Quadrants.values().length];
+	protected int neighbourDistance[] = new int[Quadrants.values().length];
+	private boolean matchedWithGroup;
 	
 	enum Quadrants {ABOVE,LEFT,RIGHT,BELOW,ABOVELEFT,ABOVERIGHT,BELOWLEFT,BELOWRIGHT}
 	
@@ -78,9 +79,10 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	public Quadrants getQuadrant(VisualBlock v)
 	{
 		int centerHeight = v.getTopY() + (v.getHeight() / 2);
+		int xOffset = 20;
 		if (centerHeight < topY)
 		{
-			if (v.getTopX() < topX)
+			if (v.getTopX() < (topX - xOffset))
 				return Quadrants.ABOVELEFT;
 			else if ((v.getTopX() > (topX+width)))
 				return Quadrants.ABOVERIGHT;
@@ -157,11 +159,11 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 
 	private int distanceAbove(VisualBlock objectBlock)
 	{
-		return (this.getTopY() - objectBlock.getBottomY());		
+		return (this.getTopY() - objectBlock.getTopY());		
 	}
 	private int distanceBelow(VisualBlock objectBlock)
 	{
-		return (objectBlock.getTopY() - this.getBottomY());		
+		return (objectBlock.getTopY() - this.getTopY());		
 	}
 	private int distanceRight(VisualBlock objectBlock)
 	{
@@ -169,7 +171,7 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	}
 	private int distanceLeft(VisualBlock objectBlock)
 	{
-		return (this.getTopX() - objectBlock.getBottomX());		
+		return (this.getTopX() - objectBlock.getTopX());		
 	}
 
 	public int getDistanceFrom(VisualBlock objectBlock, Quadrants quadrant) {
@@ -195,23 +197,7 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 
 	public void updateNeighbour(VisualBlock objectBlock, Quadrants quadrant, int distance) {
 		int index = quadrant.ordinal();
-		if (((objectBlock.getClass() == VisualBlockText.class)) &&
-			(((VisualBlockForm)this).element == VisualBlockForm.Element.TEXTINPUT) &&
-			(quadrant == VisualBlock.Quadrants.LEFT))
-			System.out.println("T ATTEMPTING: " + ((VisualBlockText)objectBlock).getText() + "topx:" + topX + "topY: " + topY + "quad:" + quadrant.toString());
 		
-		if (((objectBlock.getClass() == VisualBlockForm.class)) &&
-				(((VisualBlockForm)this).element == VisualBlockForm.Element.TEXTINPUT) &&
-			(quadrant == VisualBlock.Quadrants.LEFT))
-			System.out.println("F ATTEMPTING: " + ((VisualBlockForm)objectBlock).element.toString() + "topx:" + topX + "topY: " + topY);
-		
-
-		if (((objectBlock.getClass() == VisualBlockImage.class)) &&
-				(((VisualBlockForm)this).element == VisualBlockForm.Element.TEXTINPUT) &&
-			(quadrant == VisualBlock.Quadrants.LEFT))
-			System.out.println("F ATTEMPTING: " + ((VisualBlockImage)objectBlock).getDefaultValue() + "topx:" + topX + "topY: " + topY);
-			
-
 		if ((neighbour[index]!=null) && (neighbour[index].getClass() == VisualBlockText.class))
 			((VisualBlockText)neighbour[index]).removeTextStyleMatch(quadrant, ((VisualBlockForm)this).element);
 		
@@ -225,6 +211,23 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 		neighbourDistance[index] = distance;
 		
 		
+		
+	}
+
+	public boolean isMatchedWithGroup() {
+		return matchedWithGroup;
+	}
+
+	public void setMatchedWithGroup(boolean matchedWithGroup) {
+		this.matchedWithGroup = matchedWithGroup;
+	}
+
+	public void printQuadrants() {
+		System.out.println("Printing for " + ((VisualBlockForm)this).element);
+		for (int i = 0; i< Quadrants.values().length; i++)
+		{
+			System.out.println("Quad: " + Quadrants.values()[i] + " element: " + neighbour[i]);
+		}
 		
 	}
 }

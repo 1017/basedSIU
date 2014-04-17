@@ -25,6 +25,7 @@ public class TextStyle {
 	    } catch(NumberFormatException e) { 
 			this.weight = weight;
 	    }
+		
 	}
 	
 	public void addMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e)
@@ -106,9 +107,14 @@ public class TextStyle {
 	+" Below Quad matches: " + this.getMatches(VisualBlock.Quadrants.BELOW)
 	+" Left Quad matches: " + this.getMatches(VisualBlock.Quadrants.LEFT)
 	+" Right Quad matches: " + this.getMatches(VisualBlock.Quadrants.RIGHT)
-	+" Right match checkbox: " + this.getMatches(VisualBlock.Quadrants.RIGHT, VisualBlockForm.Element.CHECKBOX)
+	+" \nAbove Left match text input: " + this.getMatches(VisualBlock.Quadrants.ABOVELEFT, VisualBlockForm.Element.TEXTINPUT)
+	+" Above match text: " + this.getMatches(VisualBlock.Quadrants.ABOVE, VisualBlockForm.Element.TEXTINPUT)
 	+" Left match text input: " + this.getMatches(VisualBlock.Quadrants.LEFT, VisualBlockForm.Element.TEXTINPUT)
-	+" Right match radio: " + this.getMatches(VisualBlock.Quadrants.RIGHT, VisualBlockForm.Element.RADIO);
+	+" Below Left match text input: " + this.getMatches(VisualBlock.Quadrants.BELOWLEFT, VisualBlockForm.Element.TEXTINPUT)
+	+" \nAbove Left match drop: " + this.getMatches(VisualBlock.Quadrants.ABOVELEFT, VisualBlockForm.Element.DROPDOWN)
+	+" Above match drop: " + this.getMatches(VisualBlock.Quadrants.ABOVE, VisualBlockForm.Element.DROPDOWN)
+	+" Left match drop: " + this.getMatches(VisualBlock.Quadrants.LEFT, VisualBlockForm.Element.DROPDOWN)
+	+" Below Left match drop: " + this.getMatches(VisualBlock.Quadrants.BELOWLEFT, VisualBlockForm.Element.DROPDOWN);
 	}
 
 }
