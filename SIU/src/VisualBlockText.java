@@ -4,18 +4,18 @@ public class VisualBlockText extends VisualBlock
 	private String text;
 	private String styledText;
 	private TextStyle textStyle;
-	private boolean[] matchedInQuadrant = new boolean[VisualBlock.Quadrants.values().length];
+	private int[] matchedInQuadrant = new int[VisualBlock.Quadrants.values().length];
 
 	public VisualBlockText(int topX, int topY, int width, int height,
 			String font, String text, String fontSize, String color, String weight) 
 	{
 		super(topX, topY, width, height);
-		this.text = text;
+		this.text = text.trim();
 		this.styledText = "";
 		this.textStyle = TextStyleFactory.getTextStyle(font, fontSize, color, weight);
 		
 		for (int i = 0; i < VisualBlock.Quadrants.values().length; i++)
-			matchedInQuadrant[i] = false;
+			matchedInQuadrant[i] = 0;
 	}
 
 	public void addStyledText(String t)
@@ -45,18 +45,23 @@ public class VisualBlockText extends VisualBlock
 	
 	public void addTextStyleMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e)
 	{
-		//boolean hasBeenMatched = matchedInQuadrant[q.ordinal()];
-		//if (!hasBeenMatched)
-		//{
-			matchedInQuadrant[q.ordinal()] = true;
+		matchedInQuadrant[q.ordinal()]++;
+		if (matchedInQuadrant[q.ordinal()] == 1)
+		{
 			textStyle.addMatch(q, e);
-		//}
+		}
 	}
 
 	public void removeTextStyleMatch(VisualBlock.Quadrants q, VisualBlockForm.Element e) 
 	{
-		//matchedInQuadrant[q.ordinal()] = false;
-		textStyle.removeMatch(q, e);		
+		matchedInQuadrant[q.ordinal()]--;
+		if (matchedInQuadrant[q.ordinal()] == 0)
+			textStyle.removeMatch(q, e);		
+	}
+	
+	public boolean isFoundIn(VisualBlock.Quadrants q)
+	{
+		return (matchedInQuadrant[q.ordinal()] > 0);
 	}
 	
 	public String toString()

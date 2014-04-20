@@ -32,10 +32,27 @@ public class VisualBlockForm extends VisualBlock {
 		{
 			System.out.println("#matches" + numberOfMatches + "dist" + neighbourDistance[newIndex] + "text " + vbText.getText());
 		}*/
+		if (this.element == Element.CHECKBOX || this.element == Element.RADIO)
+		{
 		return ((numberOfMatches > numberOfCurrentMatches) ||
 				((numberOfMatches == numberOfCurrentMatches) &&
 						(neighbourDistance[newIndex] < neighbourDistance[currentIndex]))
 						);
+		}
+		else
+		{
+			boolean isCurrentInMostPopularQuadrant = (vbText.isFoundIn(vbText.getTextStyle().getMostPopularQuadrant()));
+			boolean isNewInMostPopularQuadrant = (((VisualBlockText)neighbour[currentIndex]).isFoundIn(((VisualBlockText)neighbour[currentIndex]).getTextStyle().getMostPopularQuadrant()));
+			System.out.println(this.element + " nM: " + numberOfMatches + " nCM: " + numberOfCurrentMatches);
+			System.out.println(" isCurrentInMostPopularQuadrant: " + isCurrentInMostPopularQuadrant + " isNewInMostPopularQuadrant: " + isNewInMostPopularQuadrant);
+			return ((numberOfMatches > numberOfCurrentMatches) ||
+					((numberOfMatches == numberOfCurrentMatches) &&
+							(neighbourDistance[newIndex] < neighbourDistance[currentIndex]))
+							) &&
+							( (isCurrentInMostPopularQuadrant && !isNewInMostPopularQuadrant) ||
+									((isCurrentInMostPopularQuadrant && isNewInMostPopularQuadrant) &&
+											(numberOfMatches > numberOfCurrentMatches)));			
+		}
 	}
 	
 	public boolean matchWithText(ArrayList<VisualBlock> visualBlocks)
@@ -81,5 +98,6 @@ public class VisualBlockForm extends VisualBlock {
 			output += defaultValue[0];
 		output += "\nType: " + element;
 		return output;
-	}
+	}	
+
 }

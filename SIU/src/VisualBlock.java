@@ -136,7 +136,7 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	
 	public boolean isBeside(VisualBlock v)
 	{
-		return ((topX+width+4) > v.getTopX())
+		return ((topX+width+10) > v.getTopX())
 		&& (topY == v.getTopY());
 	}
 

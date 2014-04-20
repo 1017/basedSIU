@@ -40,10 +40,32 @@ public class TextStyle {
 		
 	}
 	
+	public VisualBlock.Quadrants getMostPopularQuadrant(VisualBlockForm.Element e)
+	{
+		int quadrant = -1;
+		for (int i=0; i<matches.length; i++)
+		{
+			if (getMatches(VisualBlock.Quadrants.values()[i], e) > quadrant)
+				quadrant = i;
+		}
+		return VisualBlock.Quadrants.values()[0];
+	}
+	
+	public VisualBlock.Quadrants getMostPopularQuadrant()
+	{
+		int quadrant = -1;
+		for (int i=(matches.length-1); i>0; i--)
+		{
+			if (getMatches(VisualBlock.Quadrants.values()[i]) > quadrant)
+				quadrant = i;
+		}
+		return VisualBlock.Quadrants.values()[0];
+	}
+	
 	public int getMatches(VisualBlock.Quadrants q, VisualBlockForm.Element e)
 	{
 		return matches[q.ordinal()][e.ordinal()];
-	}
+	}	
 	
 	public int getMatches(VisualBlock.Quadrants q)
 	{
@@ -54,6 +76,7 @@ public class TextStyle {
 		}
 		return total;
 	}
+	
 	
 	
 	public int getMatches(VisualBlockForm.Element e)
