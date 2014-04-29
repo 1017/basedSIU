@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 abstract class VisualBlock implements Comparable<VisualBlock> {
 	protected int topX, topY, width, height;
@@ -6,6 +8,8 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	protected VisualBlock neighbour[] = new VisualBlock[Quadrants.values().length];
 	protected int neighbourDistance[] = new int[Quadrants.values().length];
 	private boolean matchedWithGroup;
+	private Attribute attribute;
+	private int neighbourMaxStartingY, neighbourMinStartingY;
 	
 	enum Quadrants {ABOVE,LEFT,RIGHT,BELOW,ABOVELEFT,ABOVERIGHT,BELOWLEFT,BELOWRIGHT}
 	
@@ -15,6 +19,8 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 		this.topY = topY;
 		this.width = width;
 		this.height = height;
+		this.neighbourMaxStartingY = -1;
+		this.neighbourMinStartingY = -1;
 		for (int i=0; i<Quadrants.values().length; i++)
 		{
 			neighbour[i] = null;
@@ -206,9 +212,65 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 		{
 			((VisualBlockText)objectBlock).addTextStyleMatch(quadrant, ((VisualBlockForm)this).element);			
 		}
+
+		int centerHeight = objectBlock.getTopY() + (objectBlock.getHeight() / 2);
 		
-		neighbour[index] = objectBlock;
-		neighbourDistance[index] = distance;
+		if (centerHeight < getTopY()) //if above
+		{
+			if (neighbourMinStartingY == -1)
+			{
+				neighbourMinStartingY = index;
+				neighbour[index] = objectBlock;
+				neighbourDistance[index] = distance;
+			}
+			else if (objectBlock.getBottomY() >= neighbour[neighbourMinStartingY].getTopY())
+			{	
+				
+				if (objectBlock.getTopY() > neighbour[neighbourMinStartingY].getBottomY()) //if old min is now invalid
+				{					
+					neighbour[neighbourMinStartingY] = null;
+					neighbourMinStartingY = index;
+				}
+				else if (objectBlock.getBottomY() > neighbour[neighbourMinStartingY].getBottomY()) //if min should be updated
+				{
+					neighbourMinStartingY = index;					
+				}
+				neighbour[index] = objectBlock;
+				neighbourDistance[index] = distance;
+			}
+		}
+		else if (centerHeight > getBottomY()) //if below
+		{
+			if (neighbourMaxStartingY == -1)
+			{
+				neighbourMaxStartingY = index;	
+				neighbour[index] = objectBlock;
+				neighbourDistance[index] = distance;
+			}
+			else if (objectBlock.getTopY() <= neighbour[neighbourMaxStartingY].getBottomY())
+			{
+					
+				if (objectBlock.getBottomY() < neighbour[neighbourMaxStartingY].getTopY()) //if old max now invalid
+				{					
+					neighbour[neighbourMaxStartingY] = null;
+					neighbourMaxStartingY = index;
+				}
+				else if (objectBlock.getBottomY() < neighbour[neighbourMaxStartingY].getBottomY()) //if old max should be updated
+				{
+					neighbourMaxStartingY = index;					
+				}
+				neighbour[index] = objectBlock;
+				neighbourDistance[index] = distance;
+				
+			}
+				
+		}
+		else
+		{		
+			neighbour[index] = objectBlock;
+			neighbourDistance[index] = distance;
+			
+		}
 		
 		
 		
@@ -229,5 +291,22 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 			System.out.println("Quad: " + Quadrants.values()[i] + " element: " + neighbour[i]);
 		}
 		
+	}
+
+	public void setAttribute(Attribute a) {
+		attribute = a;
+	}
+	public Attribute getAttribute() {
+		return attribute;
+	}
+	
+	//merge this with visual block vb from quadrant q, updating boundaries and neighbours
+	public void merge(VisualBlock vb, Quadrants q)
+	{
+		neighbour[q.ordinal()] = vb.getNeighbour(q);
+		this.topX = Math.min(this.topX, vb.getTopX());
+		this.topY = Math.min(this.topY, vb.getTopY());
+		this.width = Math.max(this.width, vb.getWidth());
+		this.height = Math.max(this.height, vb.getHeight());
 	}
 }

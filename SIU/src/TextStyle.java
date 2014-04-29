@@ -59,7 +59,7 @@ public class TextStyle {
 			if (getMatches(VisualBlock.Quadrants.values()[i]) > quadrant)
 				quadrant = i;
 		}
-		return VisualBlock.Quadrants.values()[0];
+		return VisualBlock.Quadrants.values()[quadrant];
 	}
 	
 	public int getMatches(VisualBlock.Quadrants q, VisualBlockForm.Element e)

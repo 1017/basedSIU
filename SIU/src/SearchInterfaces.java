@@ -33,6 +33,11 @@ public class SearchInterfaces {
 		return listOfSearchEngines.get(currentValue);
 	}
 	
+	public SearchInterface getValue(int value) {
+		currentValue = value;
+		return listOfSearchEngines.get(value);
+	}
+	
 	public SearchInterface getNextValue() {
 		currentValue++;
 		if (currentValue == listOfSearchEngines.size())

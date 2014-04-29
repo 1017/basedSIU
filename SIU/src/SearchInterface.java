@@ -5,6 +5,7 @@ public class SearchInterface
 {
 	private String url;
 	private ArrayList<VisualBlock> visualBlocks;
+	private ArrayList<Attribute> attributes;
 	private VisualBlockCleanTool vbc;
 	private VisualBlockExtractTool vbe;
 	private VisualBlockGroupTool vbg;
@@ -30,11 +31,12 @@ public class SearchInterface
 	private void groupVisualBlocks()
 	{
 		vbg = new VisualBlockGroupTool(visualBlocks);
+		vbg.groupFormElements();
 	}
 	
 	private void performInitialLabelling()
 	{
-		lt = new LabellingTool(visualBlocks);
+		lt = new LabellingTool(visualBlocks, attributes);
 		lt.performLabelling();
 	}
 	
@@ -44,10 +46,16 @@ public class SearchInterface
 	}
 
 	public void understand(View view) {
+		attributes = new ArrayList<Attribute>();
 		TextStyleFactory.clearTextStyles();
 		extractVisualBlocks(view);
 		cleanVisualBlocks();
 		performInitialLabelling();
+		//groupVisualBlocks();
 		
+	}
+
+	public ArrayList<Attribute> getAttributes() {
+		return attributes;
 	}
 }

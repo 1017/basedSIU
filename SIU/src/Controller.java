@@ -10,6 +10,9 @@ import org.eclipse.swt.browser.TitleEvent;
 import org.eclipse.swt.browser.TitleListener;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.List;
 
 public class Controller {
 	View view;
@@ -18,6 +21,7 @@ public class Controller {
 	Right r = new Right();
 	ProgressListener p = new ProgressL();
 	TitleListener t = new TitleL();
+	SelectionL sl = new SelectionL();
 	boolean pageLoaded = false;
 	int attempt = 1;
 	int jQueryTimeout = 100;
@@ -26,12 +30,34 @@ public class Controller {
 		this.view = view;
 		this.sEngines = se;
 		
+		addSEstoList();
 		view.addKeyListener(l);
 		view.addKeyListener(r);
 		view.addProgressListener(p);
 		view.addTitleListener(t);
+		sl.setURLList(view.getURLList());
+		view.addSelectionListenerToURLList(sl);
 		view.setURL(sEngines.getCurrentValue().getUrl());
 	}
+	
+	private void addSEstoList()
+	{
+			for (int i = 0; i < sEngines.listOfSearchEngines.size(); i++)
+			{
+				view.addToURLList(sEngines.listOfSearchEngines.get(i).getUrl());
+			}
+	}
+	
+
+	private void displayAttributes()
+	{
+		view.clearLabelList();
+		for (int i = 0; i<sEngines.getCurrentValue().getAttributes().size(); i++)
+		{
+			view.addToLabelList(sEngines.getCurrentValue().getAttributes().get(i).toString());
+		}
+	}
+	
 	
 	private void loadJQuery()
 	{
@@ -83,6 +109,7 @@ public class Controller {
 					System.out.println("Works: " + view.evaluateJS(js));
 					//extractVisualBlocks();
 					sEngines.getCurrentValue().understand(view);
+					displayAttributes();
 				} catch (SWTException e) { //if JQuery hasn't been loaded yet, change the title so we can check again in 100ms
 					String j = "setTimeout(function() { document.title = \"Attempt "+ ++attempt +"\" }, "+jQueryTimeout+")";	
 					System.out.println(j);		
@@ -90,10 +117,41 @@ public class Controller {
 					System.out.println("No JQ bro" + e);
 				}
 			}	
+			else if (attempt >= 200)
+				view.addToLabelList("ERROR: JQUERY COULD NOT BE LOADED ON THIS PAGE");
 		}
 		
 		
 	}
+	
+	class SelectionL implements SelectionListener
+ {
+		List urlList;
+		
+		public void setURLList(List list)
+		{
+			urlList = list;
+		}
+
+        public void widgetSelected(SelectionEvent event) {
+          /*int[] selections = urlList.getSelectionIndices();
+          String outText = "";
+          for (int i = 0; i < selections.length; i++)
+            outText += selections[i] + " ";
+          System.out.println("You selected: " + outText);*/
+        	
+
+			view.setURL(sEngines.getValue(urlList.getFocusIndex()).getUrl());
+			pageLoaded=false;
+			attempt = 1;
+        }
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+    }
 	
 	class ProgressL implements ProgressListener {
 

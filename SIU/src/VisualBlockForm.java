@@ -37,25 +37,28 @@ public class VisualBlockForm extends VisualBlock {
 		return ((numberOfMatches > numberOfCurrentMatches) ||
 				((numberOfMatches == numberOfCurrentMatches) &&
 						(neighbourDistance[newIndex] < neighbourDistance[currentIndex]))
-						);
+						) && neighbourDistance[newIndex] < 20;
 		}
 		else
 		{
-			boolean isCurrentInMostPopularQuadrant = (vbText.isFoundIn(vbText.getTextStyle().getMostPopularQuadrant()));
-			boolean isNewInMostPopularQuadrant = (((VisualBlockText)neighbour[currentIndex]).isFoundIn(((VisualBlockText)neighbour[currentIndex]).getTextStyle().getMostPopularQuadrant()));
-			System.out.println(this.element + " nM: " + numberOfMatches + " nCM: " + numberOfCurrentMatches);
-			System.out.println(" isCurrentInMostPopularQuadrant: " + isCurrentInMostPopularQuadrant + " isNewInMostPopularQuadrant: " + isNewInMostPopularQuadrant);
+			boolean isCurrentInMostPopularQuadrantForAnotherElement = (vbText.isFoundIn(vbText.getTextStyle().getMostPopularQuadrant()));
+			//boolean isNewInMostPopularQuadrant = (((VisualBlockText)neighbour[currentIndex]).isFoundIn(((VisualBlockText)neighbour[currentIndex]).getTextStyle().getMostPopularQuadrant()));
+			boolean isCurrentInMostPopularQuadrant = (Quadrants.values()[newIndex] == vbText.getTextStyle().getMostPopularQuadrant());
+			boolean isNewInMostPopularQuadrant = (Quadrants.values()[currentIndex] == ((VisualBlockText)neighbour[currentIndex]).getTextStyle().getMostPopularQuadrant());
+			//System.out.println(this.element + " nM: " + numberOfMatches + " nCM: " + numberOfCurrentMatches);
+			//System.out.println(" isCurrentInMostPopularQuadrant: " + isCurrentInMostPopularQuadrant + " isNewInMostPopularQuadrant: " + isNewInMostPopularQuadrant);
 			return ((numberOfMatches > numberOfCurrentMatches) ||
 					((numberOfMatches == numberOfCurrentMatches) &&
 							(neighbourDistance[newIndex] < neighbourDistance[currentIndex]))
 							) &&
-							( (isCurrentInMostPopularQuadrant && !isNewInMostPopularQuadrant) ||
+							(!isCurrentInMostPopularQuadrantForAnotherElement) &&
+							((isCurrentInMostPopularQuadrant && !isNewInMostPopularQuadrant) ||
 									((isCurrentInMostPopularQuadrant && isNewInMostPopularQuadrant) &&
 											(numberOfMatches > numberOfCurrentMatches)));			
 		}
 	}
 	
-	public boolean matchWithText(ArrayList<VisualBlock> visualBlocks)
+	public boolean matchWithText(ArrayList<VisualBlock> visualBlocks, ArrayList<Attribute> attributes)
 	{
 		VisualBlockText textToMatch = null;
 		int numberOfCurrentMatches = 0;
@@ -77,12 +80,52 @@ public class VisualBlockForm extends VisualBlock {
 		if (textToMatch != null)
 		{
 			System.out.println("Matching: " + textToMatch.getText() + " from quadrant " + q.toString() + " with " + this.element.toString());
+			Attribute attribute = new Attribute(textToMatch, this, q);
+			attributes.add(attribute);
 			textToMatch.setMatchedWithGroup(true);
 			visualBlocks.remove(textToMatch);
 			this.setMatchedWithGroup(true);
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean matchBoxesWithText(ArrayList<VisualBlock> visualBlocks, ArrayList<Attribute> attributes)
+	{
+		VisualBlockText textToMatch = null;
+		int numberOfCurrentMatches = 0;
+		int currentIndex = -1;
+		VisualBlock.Quadrants q = null;
+		for (int i = 0; i<neighbour.length; i++)
+		{
+			if ((neighbour[i] != null) &&
+					(neighbour[i].getClass() == VisualBlockText.class) &&
+					(!neighbour[i].isMatchedWithGroup()) &&
+					((textToMatch == null) || (isBetterLabelMatch((VisualBlockText)neighbour[i], i, numberOfCurrentMatches, currentIndex))))
+			{
+				numberOfCurrentMatches = ((VisualBlockText)neighbour[i]).getTextStyle().getMatches(Quadrants.values()[i], this.element);
+				currentIndex = i;
+				textToMatch = ((VisualBlockText)neighbour[i]);
+				q = Quadrants.values()[i];
+			}
+		}
+		if (textToMatch != null)
+		{
+			System.out.println("Matching: " + textToMatch.getText() + " from quadrant " + q.toString() + " with " + this.element.toString());
+			Attribute attribute = new Attribute(textToMatch, this, q);
+			attributes.add(attribute);
+			textToMatch.setMatchedWithGroup(true);
+			visualBlocks.remove(textToMatch);
+			this.setMatchedWithGroup(true);
+			this.merge(textToMatch, q);
+			return true;
+		}
+		return false;
+	}
+	
+	public String[] getDefaultValue()
+	{
+		return defaultValue;
 	}
 
 	public String toString()
@@ -98,6 +141,11 @@ public class VisualBlockForm extends VisualBlock {
 			output += defaultValue[0];
 		output += "\nType: " + element;
 		return output;
+	}
+
+	public String getType() {
+		// TODO Auto-generated method stub
+		return element.toString();
 	}	
 
 }

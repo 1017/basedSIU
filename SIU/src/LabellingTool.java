@@ -3,9 +3,11 @@ import java.util.ArrayList;
 
 public class LabellingTool {
 	ArrayList<VisualBlock> visualBlocks;
+	ArrayList<Attribute> attributes;
 	
-	public LabellingTool(ArrayList<VisualBlock> visualBlocks) {
+	public LabellingTool(ArrayList<VisualBlock> visualBlocks, ArrayList<Attribute> attributes) {
 		this.visualBlocks = visualBlocks;
+		this.attributes = attributes;
 	}
 	
 	public void performLabelling()
@@ -39,6 +41,7 @@ public class LabellingTool {
 				}
 			}
 		}
+		
 		System.out.println("Just finished first pass labelling ..");		
 	}
 
@@ -50,9 +53,11 @@ public class LabellingTool {
 			if ((visualBlocks.get(i).getClass() == VisualBlockForm.class)
 					&& (((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.CHECKBOX))
 			{		
-				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks))
+				VisualBlockForm currentFormElement = (VisualBlockForm)visualBlocks.get(i);
+				if (currentFormElement.matchBoxesWithText(visualBlocks, attributes)) //THESE SHOULDNT BE ATTRS.. COMBINE LIKE DD HERE..
 				{
-					visualBlocks.remove(i);		
+					i = visualBlocks.indexOf(currentFormElement);
+					visualBlocks.remove(currentFormElement);	
 					i--;
 				}
 			}
@@ -67,9 +72,11 @@ public class LabellingTool {
 			if ((visualBlocks.get(i).getClass() == VisualBlockForm.class)
 					&& (((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.RADIO))
 			{		
-				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks))
+				VisualBlockForm currentFormElement = (VisualBlockForm)visualBlocks.get(i);
+				if (((VisualBlockForm)visualBlocks.get(i)).matchBoxesWithText(visualBlocks, attributes)) //THESE SHOULDNT BE ATTRS.. COMBINE LIKE DD HERE..
 				{
-					visualBlocks.remove(i);		
+					i = visualBlocks.indexOf(currentFormElement);
+					visualBlocks.remove(currentFormElement);	
 					i--;
 				}
 			}
@@ -85,16 +92,18 @@ public class LabellingTool {
 					&& ((((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.TEXTINPUT) ||
 					((VisualBlockForm)visualBlocks.get(i)).element == VisualBlockForm.Element.DROPDOWN))
 			{		
-				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks) && (i<visualBlocks.size()))
+				VisualBlockForm currentFormElement = (VisualBlockForm)visualBlocks.get(i);
+				if (((VisualBlockForm)visualBlocks.get(i)).matchWithText(visualBlocks, attributes) && (i<visualBlocks.size()))
 				{
-					visualBlocks.remove(i);		
+					i = visualBlocks.indexOf(currentFormElement);
+					visualBlocks.remove(currentFormElement);	
 					i--;
 				}
 			}
 			i++;
 		}
 	}
-	public void matchDropdowns()
+	/*public void matchDropdowns()
 	{
 		int i = 0;
 		while (i<visualBlocks.size())
@@ -110,7 +119,7 @@ public class LabellingTool {
 			}
 			i++;
 		}
-	}
+	}*/
 	
 
 }
