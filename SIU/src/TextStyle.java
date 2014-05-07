@@ -54,10 +54,14 @@ public class TextStyle {
 	public VisualBlock.Quadrants getMostPopularQuadrant()
 	{
 		int quadrant = -1;
-		for (int i=(matches.length-1); i>0; i--)
+		int numberOfMatches = -1;
+		for (int i=(matches.length-1); i>=0; i--)
 		{
-			if (getMatches(VisualBlock.Quadrants.values()[i]) > quadrant)
+			if (getMatches(VisualBlock.Quadrants.values()[i]) > numberOfMatches)
+			{
 				quadrant = i;
+				numberOfMatches = getMatches(VisualBlock.Quadrants.values()[i]);
+			}
 		}
 		return VisualBlock.Quadrants.values()[quadrant];
 	}
@@ -130,6 +134,8 @@ public class TextStyle {
 	+" Below Quad matches: " + this.getMatches(VisualBlock.Quadrants.BELOW)
 	+" Left Quad matches: " + this.getMatches(VisualBlock.Quadrants.LEFT)
 	+" Right Quad matches: " + this.getMatches(VisualBlock.Quadrants.RIGHT)
+	+" Right Quad matches: " + this.getMatches(VisualBlock.Quadrants.BELOWRIGHT)
+	+" Right Quad matches: " + this.getMatches(VisualBlock.Quadrants.BELOWLEFT)/*
 	+" \nAbove Left match text input: " + this.getMatches(VisualBlock.Quadrants.ABOVELEFT, VisualBlockForm.Element.TEXTINPUT)
 	+" Above match text: " + this.getMatches(VisualBlock.Quadrants.ABOVE, VisualBlockForm.Element.TEXTINPUT)
 	+" Left match text input: " + this.getMatches(VisualBlock.Quadrants.LEFT, VisualBlockForm.Element.TEXTINPUT)
@@ -137,7 +143,8 @@ public class TextStyle {
 	+" \nAbove Left match drop: " + this.getMatches(VisualBlock.Quadrants.ABOVELEFT, VisualBlockForm.Element.DROPDOWN)
 	+" Above match drop: " + this.getMatches(VisualBlock.Quadrants.ABOVE, VisualBlockForm.Element.DROPDOWN)
 	+" Left match drop: " + this.getMatches(VisualBlock.Quadrants.LEFT, VisualBlockForm.Element.DROPDOWN)
-	+" Below Left match drop: " + this.getMatches(VisualBlock.Quadrants.BELOWLEFT, VisualBlockForm.Element.DROPDOWN);
+	+" Below Left match drop: " + this.getMatches(VisualBlock.Quadrants.BELOWLEFT, VisualBlockForm.Element.DROPDOWN);*/
+	+" Most popular quadrant: " + this.getMostPopularQuadrant();
 	}
 
 }

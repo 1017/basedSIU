@@ -61,7 +61,7 @@ public class Controller {
 	
 	private void loadJQuery()
 	{
-		String js = "function addLibraries()"  //http://stackoverflow.com/questions/5859440/how-to-use-jqueryui-in-swt-browser
+		String js = "function addLibraries()" 
 				+"{"
 				+"var head = document.getElementsByTagName('head')[0];"
 
@@ -81,16 +81,27 @@ public class Controller {
 	
 	private void highlightVisualBlocks()
 	{
+		/*int formNum = sEngines.getCurrentValue().getDefaultForm();
 		String highlightVisualBlocks = 
 		"function highlightVisualBlocks()"
 		+"{"
-		+"$(\"form\").css(\"border\", \"1px solid red\");"
-		+"$('form').find('select,:submit,:checked,:selected,:text,textarea').css(\"border\", \"1px solid blue\");"
-		+"$('form').find('input[type=image]').css(\"border\", \"1px solid green\");"
-		+"$('form').find(':checkbox,:radio').wrap('<span></span>').parent().css(\"border\", \"1px solid blue\");"
-		+"$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').wrap(\"<span></span>\").parent().css(\"border\", \"1px solid yellow\");"
+		+"$(\"form:nth-child("+formNum+")\").css(\"border\", \"1px solid red\");"
+		+"$('form:nth-child("+formNum+")').find('select,:submit,:checked,:selected,:text,textarea').css(\"border\", \"1px solid blue\");"
+		+"$('form:nth-child("+formNum+")').find('input[type=image]').css(\"border\", \"1px solid green\");"
+		+"$('form:nth-child("+formNum+")').find(':checkbox,:radio').wrap('<span></span>').parent().css(\"border\", \"1px solid blue\");"
+		+"$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').wrap(\"<span></span>\").parent().css(\"border\", \"1px solid yellow\");"
 		+"}"
-		+"highlightVisualBlocks();";
+		+"highlightVisualBlocks();";*/
+		String highlightVisualBlocks = 
+				"function highlightVisualBlocks()"
+				+"{"
+				+"$(\"form\").css(\"border\", \"1px solid red\");"
+				+"$('form').find('select,:submit,:checked,:selected,:text,textarea').css(\"border\", \"1px solid blue\");"
+				+"$('form').find('input[type=image]').css(\"border\", \"1px solid green\");"
+				+"$('form').find(':checkbox,:radio').wrap('<span></span>').parent().css(\"border\", \"1px solid blue\");"
+				+"$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea').wrap(\"<span></span>\").parent().css(\"border\", \"1px solid yellow\");"
+				+"}"
+				+"highlightVisualBlocks();";
 		
 		view.executeJS(highlightVisualBlocks);
 	}

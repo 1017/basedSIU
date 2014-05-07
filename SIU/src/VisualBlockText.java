@@ -61,6 +61,7 @@ public class VisualBlockText extends VisualBlock
 	
 	public boolean isFoundIn(VisualBlock.Quadrants q)
 	{
+		System.out.println("Most popular quad: " + q + " matched? " + (matchedInQuadrant[q.ordinal()] > 0));
 		return (matchedInQuadrant[q.ordinal()] > 0);
 	}
 	

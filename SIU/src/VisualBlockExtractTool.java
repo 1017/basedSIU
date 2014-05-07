@@ -8,9 +8,11 @@ import java.util.Collections;
 public class VisualBlockExtractTool 
 {
 	ArrayList<VisualBlock> visualBlocks;
+	private int formNum = 1;
 
-	public ArrayList<VisualBlock> extract(View v) 
+	public ArrayList<VisualBlock> extract(View v, int formNum) 
 	{
+		this.formNum = formNum;
 		visualBlocks = new ArrayList<VisualBlock>();
 		extractTextBlocks(v);
 		TextStyleFactory.printTextStyles();
@@ -54,23 +56,23 @@ public class VisualBlockExtractTool
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().position().left);}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().position().left);}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().position().top);}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().position().top);}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().outerWidth());}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().outerWidth());}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().outerHeight());}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().outerHeight());}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().css('font-family'));}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().css('font-family'));}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = (this.wholeText);}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = (this.wholeText);}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().css('font-size'));}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().css('font-size'));}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().css('color'));}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = ($(this).parent().css('color'));}});"
 				+"i++;j=0;"
-				+ "$('form').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = String(($(this).parent().css('font-weight')));}});"
+				+ "$('form:nth-child("+formNum+")').find(\"*\").contents().filter(function () { return this.nodeType == 3 && /\\S/.test(this.nodeValue); }).not('select,:submit,:checked,:selected,:text,textarea, option').each(function(){ if ($(this).parent().height() != 0) { arr[i][j++] = String(($(this).parent().css('font-weight')));}});"
 				
 				+ "return arr;";
 
@@ -96,20 +98,20 @@ public class VisualBlockExtractTool
 		
 	}
 	
-	private void extractImageBlocks(View v) //$('form').find('input[type=image]')
+	private void extractImageBlocks(View v) //$('form:nth-child("+formNum+")').find('input[type=image]')
 	{
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = ($(this).position().left);});"
+				+ "$('form:nth-child("+formNum+")').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = ($(this).position().left);});"
 				+"i++;j=0;"
-				+ "$('form').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = ($(this).position().top);});"
+				+ "$('form:nth-child("+formNum+")').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = ($(this).position().top);});"
 				+"i++;j=0;"
-				+ "$('form').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
+				+ "$('form:nth-child("+formNum+")').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
 				+"i++;j=0;"
-				+ "$('form').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = $(this).outerHeight();});"
+				+ "$('form:nth-child("+formNum+")').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = $(this).outerHeight();});"
 				+"i++;j=0;"
-				+ "$('form').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = $(this).val();});"
+				+ "$('form:nth-child("+formNum+")').find(':image').not('input[type=image]').each(function(){ arr[i][j++] = $(this).val();});"
 				+ "return arr;";
 
 		Object[] unstructuredJSTextBlockInformation = (Object[])v.evaluateJS(js);		
@@ -135,15 +137,15 @@ public class VisualBlockExtractTool
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find(':text,textarea').each(function(){ arr[i][j++] = ($(this).position().left);});"
+				+ "$('form:nth-child("+formNum+")').find(':text,textarea').each(function(){ arr[i][j++] = ($(this).position().left);});"
 				+"i++;j=0;"
-				+ "$('form').find(':text,textarea').each(function(){ arr[i][j++] = ($(this).position().top);});"
+				+ "$('form:nth-child("+formNum+")').find(':text,textarea').each(function(){ arr[i][j++] = ($(this).position().top);});"
 				+"i++;j=0;"
-				+ "$('form').find(':text,textarea').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
+				+ "$('form:nth-child("+formNum+")').find(':text,textarea').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
 				+"i++;j=0;"
-				+ "$('form').find(':text,textarea').each(function(){ arr[i][j++] = $(this).outerHeight();});"
+				+ "$('form:nth-child("+formNum+")').find(':text,textarea').each(function(){ arr[i][j++] = $(this).outerHeight();});"
 				+"i++;j=0;"
-				+ "$('form').find(':text,textarea').each(function(){ arr[i][j++] = $(this).val()});"
+				+ "$('form:nth-child("+formNum+")').find(':text,textarea').each(function(){ arr[i][j++] = $(this).val()});"
 				+ "return arr;";
 
 		Object[] unstructuredJSTextBlockInformation = (Object[])v.evaluateJS(js);
@@ -168,15 +170,15 @@ public class VisualBlockExtractTool
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find('select').each(function(){ arr[i][j++] = ($(this).position().left);});"
+				+ "$('form:nth-child("+formNum+")').find('select').each(function(){ arr[i][j++] = ($(this).position().left);});"
 				+"i++;j=0;"
-				+ "$('form').find('select').each(function(){ arr[i][j++] = ($(this).position().top);});"
+				+ "$('form:nth-child("+formNum+")').find('select').each(function(){ arr[i][j++] = ($(this).position().top);});"
 				+"i++;j=0;"
-				+ "$('form').find('select').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
+				+ "$('form:nth-child("+formNum+")').find('select').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
 				+"i++;j=0;"
-				+ "$('form').find('select').each(function(){ arr[i][j++] = $(this).outerHeight();});"
+				+ "$('form:nth-child("+formNum+")').find('select').each(function(){ arr[i][j++] = $(this).outerHeight();});"
 				+"i++;j=0;var k=0;"
-				+ "$('form').find('select').each(function(){ children = new Array();k=0; $(this).children('option').each(function(i, e){if (e.innerText != '') children[k++] =  e.innerText; }); arr[i][j++] = children});"
+				+ "$('form:nth-child("+formNum+")').find('select').each(function(){ children = new Array();k=0; $(this).children('option').each(function(i, e){if (e.innerText != '') children[k++] =  e.innerText; }); arr[i][j++] = children});"
 				+ "return arr;";
 
 		Object[] unstructuredJSTextBlockInformation = (Object[])v.evaluateJS(js);		
@@ -217,15 +219,15 @@ public class VisualBlockExtractTool
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find(':radio').each(function(){ arr[i][j++] = ($(this).position().left);});"
+				+ "$('form:nth-child("+formNum+")').find(':radio').each(function(){ arr[i][j++] = ($(this).position().left);});"
 				+"i++;j=0;"
-				+ "$('form').find(':radio').each(function(){ arr[i][j++] = ($(this).position().top);});"
+				+ "$('form:nth-child("+formNum+")').find(':radio').each(function(){ arr[i][j++] = ($(this).position().top);});"
 				+"i++;j=0;"
-				+ "$('form').find(':radio').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
+				+ "$('form:nth-child("+formNum+")').find(':radio').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
 				+"i++;j=0;"
-				+ "$('form').find(':radio').each(function(){ arr[i][j++] = $(this).outerHeight();});"
+				+ "$('form:nth-child("+formNum+")').find(':radio').each(function(){ arr[i][j++] = $(this).outerHeight();});"
 				+"i++;j=0;"
-				+ "$('form').find(':radio').each(function(){ if ($(this).is(':checked')) {arr[i][j++] = 'selected'} else {arr[i][j++] = ''}});"
+				+ "$('form:nth-child("+formNum+")').find(':radio').each(function(){ if ($(this).is(':checked')) {arr[i][j++] = 'selected'} else {arr[i][j++] = ''}});"
 				+ "return arr;";
 
 		Object[] unstructuredJSTextBlockInformation = (Object[])v.evaluateJS(js);		
@@ -250,15 +252,15 @@ public class VisualBlockExtractTool
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find(':checkbox').each(function(){ arr[i][j++] = ($(this).position().left);});"
+				+ "$('form:nth-child("+formNum+")').find(':checkbox').each(function(){ arr[i][j++] = ($(this).position().left);});"
 				+"i++;j=0;"
-				+ "$('form').find(':checkbox').each(function(){ arr[i][j++] = ($(this).position().top);});"
+				+ "$('form:nth-child("+formNum+")').find(':checkbox').each(function(){ arr[i][j++] = ($(this).position().top);});"
 				+"i++;j=0;"
-				+ "$('form').find(':checkbox').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
+				+ "$('form:nth-child("+formNum+")').find(':checkbox').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
 				+"i++;j=0;"
-				+ "$('form').find(':checkbox').each(function(){ arr[i][j++] = $(this).outerHeight();});"
+				+ "$('form:nth-child("+formNum+")').find(':checkbox').each(function(){ arr[i][j++] = $(this).outerHeight();});"
 				+"i++;j=0;"
-				+ "$('form').find(':checkbox').each(function(){ if ($(this).is(':checked')) {arr[i][j++] = 'selected'} else {arr[i][j++] = ''}});"
+				+ "$('form:nth-child("+formNum+")').find(':checkbox').each(function(){ if ($(this).is(':checked')) {arr[i][j++] = 'selected'} else {arr[i][j++] = ''}});"
 				+ "return arr;";
 
 		Object[] unstructuredJSTextBlockInformation = (Object[])v.evaluateJS(js);		
@@ -283,17 +285,17 @@ public class VisualBlockExtractTool
 		String js = //top and left > 0
 				"var arr = [new Array(), new Array(), new Array(), new Array(), new Array()];"
 				+ "var i=0;var j=0;"
-				+ "$('form').find(':submit,input[type=image]').each(function(){ arr[i][j++] = ($(this).position().left);});"
+				+ "$('form:nth-child("+formNum+")').find(':submit,input[type=image]').each(function(){ arr[i][j++] = ($(this).position().left);});"
 				+"i++;j=0;"
-				+ "$('form').find(':submit,input[type=image]').each(function(){ arr[i][j++] = ($(this).position().top);});"
+				+ "$('form:nth-child("+formNum+")').find(':submit,input[type=image]').each(function(){ arr[i][j++] = ($(this).position().top);});"
 				+"i++;j=0;"
-				+ "$('form').find(':submit,input[type=image]').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
+				+ "$('form:nth-child("+formNum+")').find(':submit,input[type=image]').each(function(){ arr[i][j++] = ($(this).outerWidth());});"
 				+"i++;j=0;"
-				+ "$('form').find(':submit,input[type=image]').each(function(){ arr[i][j++] = $(this).outerHeight();});"
+				+ "$('form:nth-child("+formNum+")').find(':submit,input[type=image]').each(function(){ arr[i][j++] = $(this).outerHeight();});"
 				+"i++;j=0;"
-				+ "$('form').find(':submit,input[type=image]').each(function(){ arr[i][j++] = $(this).val();});"
+				+ "$('form:nth-child("+formNum+")').find(':submit,input[type=image]').each(function(){ arr[i][j++] = $(this).val();});"
 				/*+"i++;j=0;" //necessary to
-				+ "$('form').find(':select').each(function(){ if () {arr[i][j++] = 'submit';}else{j++;};});"*/
+				+ "$('form:nth-child("+formNum+")').find(':select').each(function(){ if () {arr[i][j++] = 'submit';}else{j++;};});"*/
 				+ "return arr;";
 
 		Object[] unstructuredJSTextBlockInformation = (Object[])v.evaluateJS(js);		

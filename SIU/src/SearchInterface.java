@@ -10,10 +10,12 @@ public class SearchInterface
 	private VisualBlockExtractTool vbe;
 	private VisualBlockGroupTool vbg;
 	private LabellingTool lt;
+	private int formNum;
 	
 	public SearchInterface(String u)
 	{
 		url = u;
+		formNum = 1;
 	}
 	
 	private void cleanVisualBlocks()
@@ -25,7 +27,7 @@ public class SearchInterface
 	private void extractVisualBlocks(View v)
 	{
 		vbe = new VisualBlockExtractTool();
-		visualBlocks = vbe.extract(v);
+		visualBlocks = vbe.extract(v, formNum);
 	}
 	
 	private void groupVisualBlocks()
@@ -57,5 +59,15 @@ public class SearchInterface
 
 	public ArrayList<Attribute> getAttributes() {
 		return attributes;
+	}
+
+	public void setDefaultForm(int formNum) {
+		this.formNum = formNum;
+		
+	}
+	
+	public int getDefaultForm() {
+		return formNum;
+		
 	}
 }

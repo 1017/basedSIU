@@ -1,0 +1,26 @@
+http://www.cheapair.com/ 1 //Airfares
+http://www.farecompare.com/ 2
+http://www.travelocity.com/
+http://www.travelzoo.com/supersearch/ 3
+http://www.southwest.com/flight/;jsessionid=DC2838143836A5455A2AE2EC5E894869
+http://www.vialibri.net/ 2 //Books
+http://www.usedbooksearch.co.uk/
+http://www.bookfinder.com/
+http://www.barnesandnoble.com/search.asp 3
+http://www.abebooks.com/ 2
+http://www.bookingbuddy.com/hotel.php 1 //Hotels
+http://www.marriott.com/search/default.mi
+http://uk.hotels.com/
+http://www.hotwire.com/uk?currencyCode=GBP 2
+http://www.travelsupermarket.com/c/hotels/
+http://www.filmarchive.org.nz/the-catalogue/advanced-search 1 //movies
+http://ffh.films.com/AdvancedSearch.aspx
+http://www.findanyfilm.com/advanced-search 2
+http://www.amazon.com/Advanced-Search-DVD/b?ie=UTF8&node=241586011
+http://www.wmm.com/filmcatalog/search/advsearch.asp 3
+http://www.audionetwork.com/advanced-search.aspx
+http://www.sheetmusicplus.com/advanced-search 1 //music
+http://music.barnesandnoble.com/search/search.asp 2 
+http://www.sounddogs.com/advsearch.asp 2
+http://www.musicnotes.com/search/advanced.asp 3
+http://www.alibris.co.uk/stores/crimepays/search?cid=null

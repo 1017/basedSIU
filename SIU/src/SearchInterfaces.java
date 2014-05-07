@@ -3,6 +3,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SearchInterfaces {
 	
@@ -17,9 +18,21 @@ public class SearchInterfaces {
 		String line;
 		try {
 			br = new BufferedReader(new FileReader(fileName));
+			Scanner s;
+
 			while ((line = br.readLine()) != null) 
 			{			
-				listOfSearchEngines.add(new SearchInterface(line));
+				s = new Scanner(line);
+				s.useDelimiter(" ");
+				SearchInterface searchInterface;
+				searchInterface = new SearchInterface(s.next());
+				if(s.hasNext()) 
+				{
+					searchInterface.setDefaultForm(s.nextInt());
+					System.out.println(searchInterface.getDefaultForm());
+				}
+				listOfSearchEngines.add(searchInterface);
+				s.close();
 			}
 			br.close();
 			}

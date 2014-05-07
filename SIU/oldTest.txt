@@ -1,0 +1,26 @@
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Airfares/interfacecached/www.air-europa.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Airfares/interfacecached/www.flyairnorth.com_1/meta_index1.html 2
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Airfares/interfacecached/www.alohaairlines.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Airfares/interfacecached/www.americanair.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Airfares/interfacecached/apps.flights.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.harvard.com_1/meta_index1.html 2
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.lifewaystores.com_1/meta_index1.html 2
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.lww.com_1/meta_index1.html 2
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/mitpress.mit.edu_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Books/interfacecached/www.powells.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Hotels/interfacecached/www.doubletree.com_1/meta_index1.html 2
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Hotels/interfacecached/redbud.forest.net_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Hotels/interfacecached/www.hotwire.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Hotels/interfacecached/edit.travel.yahoo.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Hotels/interfacecached/travel.bc.ca_1/meta_index1.html 2
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Movies/interfacecached/www.mysimon.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Movies/interfacecached/www.zoommovie.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Movies/interfacecached/www.rarevideo.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Movies/interfacecached/www.eurekamovies.com_1/meta_index1.html 3
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/Movies/interfacecached/www.firstandsecond.com_1/meta_index1.html 3
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.gracenote.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.musicimports.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.recordsbymail.com_1/meta_index1.html 
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.cdeurope.com_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.britannia-music.co.uk_1/meta_index1.html
+http://metaquerier.cs.uiuc.edu/repository/datasets/tel-8/browse/MusicRecords/interfacecached/www.firstandsecond.com_1/meta_index1.html 3

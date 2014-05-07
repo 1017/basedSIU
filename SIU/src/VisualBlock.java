@@ -142,17 +142,18 @@ abstract class VisualBlock implements Comparable<VisualBlock> {
 	
 	public boolean isBeside(VisualBlock v)
 	{
-		return ((topX+width+10) > v.getTopX())
+		return ((topX+width+5) > v.getTopX())
 		&& (topY == v.getTopY());
 	}
 
 	public int compareTo(VisualBlock v) //sort blocks such that starts at top left, goes right, then down
 	{
 		if ((topY+height < v.getTopY()) || 
-				(topY < v.getTopY()+v.getHeight() && (topX < v.getTopX())))
+				(topY+height <= v.getTopY()+v.getHeight() && (topX < v.getTopX())))
 			return -1;
 		else
-			return 1;		
+			return 1;			
+		
 	}
 
 	public VisualBlock getNeighbour(Quadrants quadrant) {
